@@ -16,7 +16,7 @@ pip3 install psutil bottle configparser Flask
 git clone https://github.com/bedro96/terraform_vmss_ag.git
 
 #Start health probe job
-cd azvmscripts
+cd terraform_vmss_ag
 chmod +x *.py
 nohup ./health_probe_handler.py & echo $! > health-probe-pid.file &
 
