@@ -259,9 +259,9 @@ resource "azurerm_application_gateway" "network" {
     protocol                  = "Http"
     host                      = "127.0.0.1"
     path                      = "/health"
-    interval                  = 5
-    timeout                   = 5
-    unhealthy_threshold       = 3
+    interval                  = 1
+    timeout                   = 1
+    unhealthy_threshold       = 2
     pick_host_name_from_backend_http_settings = false
     minimum_servers           = 0
     match {
