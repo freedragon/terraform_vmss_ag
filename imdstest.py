@@ -19,11 +19,16 @@ vmScaleSetName = response_txt['vmScaleSetName']
 resourceGroupName = response_txt['resourceGroupName']
 #print('ResourceGroupName: {}'.format(resourceGroupName))
 tags = response_txt['tags']
-deleteTag = config.get('imds', 'pending_delete_tag')
-if deleteTag in tags:
-    print('Tag information found : {}'.format(tags))
-else:
-    print('There is no matching')
+global pendingDeleteState
+pendingDeleteState = False
+print('tags: {}'.format(tags))
+for tag in response_txt['tagsList']:
+    for k, v in tag.items():
+        if( k == 'name' and v == 'Platform.PendingDeletionTime'):
+            pendingDeleteState = True
+print('pendingDelteState is {}'.format(pendingDeleteState))
+#    if(result['name'] == 'Platform.PendingDeleteTime'):
+#        print('PendingDeleteTime is detected')
 #populate access_token
 accesstoken_url = config.get('imds', 'accesstoken_url')
 #print('accesstoken_url : {}'.format(accesstoken_url))
