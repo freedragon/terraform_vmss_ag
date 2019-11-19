@@ -10,10 +10,10 @@ apt update
 apt -y dist-upgrade
 apt update
 apt -y install python3-pip
-pip3 install psutil bottle configparser
+pip3 install psutil bottle configparser Flask
 
 #checkout code
-git clone https://github.com/manojsingh/azvmscripts.git
+git clone https://github.com/bedro96/terraform_vmss_ag.git
 
 #Start health probe job
 cd azvmscripts
