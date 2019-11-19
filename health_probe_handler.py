@@ -4,7 +4,7 @@
 
 from bottle import route, run, redirect, response
 
-hostname = 'localhost'
+hostname = '0.0.0.0'
 hostport = 9000
 
 def writebody():
