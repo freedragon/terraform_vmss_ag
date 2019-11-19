@@ -107,7 +107,7 @@ resource "azurerm_virtual_machine_scale_set" "terraformvmss" {
   depends_on = [azurerm_application_gateway.network]
   upgrade_policy_mode = "Manual"
   proximity_placement_group_id = "${azurerm_proximity_placement_group.terraformppg.id}"
-
+  
   sku {
     name     = "Standard_D1_v2"
     tier     = "Standard"
