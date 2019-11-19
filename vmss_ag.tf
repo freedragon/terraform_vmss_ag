@@ -172,6 +172,7 @@ resource "azurerm_virtual_machine_scale_set" "terraformvmss" {
   }
   tags = {
     environment = "Terraform deployment"
+    EnablePendingDeletion = "true"
   }
   
 }
