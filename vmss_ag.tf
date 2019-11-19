@@ -107,6 +107,7 @@ resource "azurerm_virtual_machine_scale_set" "terraformvmss" {
   depends_on = [azurerm_application_gateway.network]
   upgrade_policy_mode = "Manual"
   proximity_placement_group_id = "${azurerm_proximity_placement_group.terraformppg.id}"
+  overprovision = false
   
   sku {
     name     = "Standard_D1_v2"
@@ -172,7 +173,7 @@ resource "azurerm_virtual_machine_scale_set" "terraformvmss" {
   }
   tags = {
     environment = "Terraform deployment"
-    EnablePendingDeletion = "true"
+    EnablePendingDeletion = true
   }
   
 }
@@ -232,7 +233,7 @@ resource "azurerm_application_gateway" "network" {
     protocol              = "Http"
     request_timeout       = 1
     connection_draining {
-      enabled             = "true"
+      enabled             = true
       drain_timeout_sec   = 10 
     }
     probe_name            = "${local.probe_name}"
