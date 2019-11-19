@@ -185,14 +185,14 @@ resource "azurerm_role_assignment" "terraformmsirole" {
 }
 
 locals {
-  backend_address_pool_name      = "${azurerm_virtual_network.terraformvnet.name}-beap"
-  frontend_port_name             = "${azurerm_virtual_network.terraformvnet.name}-feport"
-  frontend_ip_configuration_name = "${azurerm_virtual_network.terraformvnet.name}-feip"
-  http_setting_name              = "${azurerm_virtual_network.terraformvnet.name}-be-htst"
-  listener_name                  = "${azurerm_virtual_network.terraformvnet.name}-httplstn"
-  request_routing_rule_name      = "${azurerm_virtual_network.terraformvnet.name}-rqrt"
-  redirect_configuration_name    = "${azurerm_virtual_network.terraformvnet.name}-rdrcfg"
-  probe_name                     = "${azurerm_virtual_network.terraformvnet.name}-probe"
+  backend_address_pool_name      = "${var.prefix}-appg-beap"
+  frontend_port_name             = "${var.prefix}-appg-feport"
+  frontend_ip_configuration_name = "${var.prefix}-appg-feip"
+  http_setting_name              = "${var.prefix}-appg-be-htst"
+  listener_name                  = "${var.prefix}-appg-httplstn"
+  request_routing_rule_name      = "${var.prefix}-appg-rqrt"
+  redirect_configuration_name    = "${var.prefix}-appg-rdrcfg"
+  probe_name                     = "${var.prefix}-appg-probe"
 }
 
 resource "azurerm_application_gateway" "network" {
