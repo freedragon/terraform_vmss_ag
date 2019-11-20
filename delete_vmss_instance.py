@@ -1,42 +1,48 @@
 #!/usr/bin/python3
 from logconfig import logger
 from configuration import config
-from vminstance import VMInstance
+from InstanceMetadata import InstanceMetadata
 import requests, json, os, time, sys
 from bearer_token import BearerAuth
 
 import socket
 
-host_name = socket.gethostname()
-host_ip = socket.gethostbyname(host_name)
-timeSleep = 5
+# Initializing InstanceMetadata
+metadata = InstanceMetadata().populate()
+isPendingDelete = metadata.isPendingDelete()
 
-vmInstance = VMInstance().populate()
+host_name = metadata.name
+host_ip = socket.gethostbyname(host_name)
+timeSleep = 10
 
 # Check the value of Platform.PendingDeletionTime tag of IMDS
+if (isPendingDelete == False):
+    sys.exit(1)
 
-appGatewayUrl = "https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationGateways/{appGatewayName}/backendhealth?api-version=2019-09-01"
-appGateway = "vmss-appgateway"
+# Get App GW Backend status check URL and App GW name
+appGatewayUrl = config.get('appgw', 'appgw_behealth_url')
+appGateway = config.get('appgw', 'appgw_name')
 
-formatted_url = appGatewayUrl.format(subscriptionId = vmInstance.subscriptionId, \
-                resourceGroupName = vmInstance.resourceGroupName,\
+formatted_url = appGatewayUrl.format(subscriptionId = metadata.subscriptionId, \
+                resourceGroupName = metadata.resourceGroupName,\
                 appGatewayName = appGateway)
 
 # Getting App GW backend health URI
 try:
-    r = requests.post(formatted_url, headers = {}, auth=BearerAuth(vmInstance.access_token))
+    r = requests.post(formatted_url, headers = {}, auth=BearerAuth(metadata.access_token))
 except requests.exceptions.RequestException as e:
-    print ("error : {0}".format(e))
+    logger.info("error : " + e)
     sys.exit(1)
 
 # Waiting for another api to check the result.
 time.sleep(timeSleep)
 try:
-    resp = requests.get(r.headers["Location"], auth=BearerAuth(vmInstance.access_token))
+    resp = requests.get(r.headers["Location"], auth=BearerAuth(metadata.access_token))
 except requests.exceptions.RequestException as e:
-    print ("error : {0}".format(e))
+    logger.info("error : " + e)
     sys.exit(1)
-    
+
+# Delete VMSS instance
 if (resp.status_code == 200):
     pools = resp.json()["backendAddressPools"]
     for pool in pools:
@@ -46,9 +52,9 @@ if (resp.status_code == 200):
             for server in servers:
                 if (host_ip == server["address"]):
                     health = server["health"]
-                    print('{0} is {1}'.format(host_name, health))
+                    logger.info(host_name + " is " + health)
                     if (health == "Unhealty"):
-                        print('Delete myself')
+                        logger.info("Delete " + host_name)
                         #check copying log and stopping custom metric
                         #delete vmss instance
 
