@@ -78,7 +78,7 @@ def deleteVMFromVMSS():
     requests.delete(formatted_url, data={}, auth=BearerAuth(vmInstance.access_token))
 
 #if(isInstanceinPendingDelete()):
-if(vmInsance.isPendingDelete()):
+if(vmInstance.isPendingDelete()):
     logger.info("Pending Delete is true ...starting custom clean up logic")
     # No need to kill health probe. Probe will remove instance from AGW by returning 410.
     # failLoadBalancerProbes()
