@@ -11,14 +11,15 @@ def delete_vmss_instance_metrics():
     vmInstance        = InstanceMetadata().poulate()
     
     subscription_id   = vmInstance.subscription_id
-    resource_client   = ResourceManagementClient(credentials, subscription_id)
+    #resource_client   = ResourceManagementClient(credentials, subscription_id)
     compute_client    = ComputeManagementClient(credentials, subscription_id)
-    network_client    = NetworkManagementClient(credentials, subscription_id)
+    #network_client    = NetworkManagementClient(credentials, subscription_id)
 
     resourceGroupName = vmInstance.resourceGroupName
     vmScaleSetName    = vmInstance.vmScaleSetName
-    
-    compute_client.virtual_machine_scale_set_vms.delete(rg,name,1)
+    host_name         = socket.gethostname()
+    vmid              = hostname_to_vmid(host_name)
+    compute_client.virtual_machine_scale_set_vms.delete(resourceGroupName, vmScaleSetName, vmid)
 
 def hostname_to_vmid(hostname):
     # get last 6 characters and remove leading zeroes
@@ -34,5 +35,3 @@ def hostname_to_vmid(hostname):
             vmid += (ord(x) - 55) * multiplier
         multiplier *= 36
     return hostname_to_vmid
-
-# compute_client.virtual_machine_scale_set_vms.delete(rg,name,1)
