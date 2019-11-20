@@ -10,6 +10,7 @@ class InstanceMetadata:
                 VM Instance Metadata:
                      Id - {vmId}
                      Name - {name}
+                     PrivateIp - {privateIp}
                      location - {location}
                      SubscriptionId - {subscriptionId}
                      ResourceGroupName - {resourceGroupName}
@@ -20,6 +21,7 @@ class InstanceMetadata:
                     vmId = self.vmId,
                     name = self.name,
                     location = self.location,
+                    privateIp = self.privateIp,
                     subscriptionId = self.subscriptionId,
                     resourceGroupName = self.resourceGroupName,
                     vmScaleSetName = self.vmScaleSetName,
@@ -47,6 +49,11 @@ class InstanceMetadata:
             self.vmScaleSetName = response_txt['vmScaleSetName']
             self.resourceGroupName = response_txt['resourceGroupName']
             self.tagsList = response_txt['tagsList']
+
+            # obtain private ip address of instnace
+            privateip_url = config.get('imds', 'privateip_url')
+            response = requests.get(privateip_url, headers={"Metadata":"true"})
+            self.privateIp = response.text
 
             #populate access_token
             self.access_token = ''
