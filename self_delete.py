@@ -8,9 +8,9 @@ import socket
 def delete_vmss_instance():
     ##MSI based authentication
     credentials       = MSIAuthentication()
-    vmInstance        = InstanceMetadata().poulate()
+    vmInstance        = InstanceMetadata().populate()
     
-    subscription_id   = vmInstance.subscription_id
+    subscription_id   = vmInstance.subscriptionId
     #resource_client   = ResourceManagementClient(credentials, subscription_id)
     compute_client    = ComputeManagementClient(credentials, subscription_id)
     #network_client    = NetworkManagementClient(credentials, subscription_id)
