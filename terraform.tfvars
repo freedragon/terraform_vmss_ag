@@ -1,2 +1,2 @@
-prefix="kunhovmss1"
+prefix="kunhovmss"
 location="southeastasia"
