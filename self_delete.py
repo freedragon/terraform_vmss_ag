@@ -6,7 +6,7 @@ from InstanceMetadata import InstanceMetadata
 import socket
 
 def delete_vmss_instance():
-    //MSI based authentication
+    ##MSI based authentication
     credentials       = MSIAuthentication()
     vmInstance        = InstanceMetadata().poulate()
     
