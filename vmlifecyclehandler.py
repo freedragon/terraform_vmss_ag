@@ -11,17 +11,6 @@ vmInstance = InstanceMetadata().populate()
 logger.info(vmInstance)
 
 """
-Check if the vm needs to be deleted
-"""
-def isInstanceinPendingDelete():
-    deleteTag = config.get('imds', 'pending_delete_tag')
-
-    if deleteTag in vmInstance.tags:
-        return True
-    else:
-        return False
-
-"""
     Here is where we need to put all the custom tasks that need to be performed
 """
 def  performCustomOperation():
@@ -62,28 +51,9 @@ def stopCustomMetricFlow():
     if areCronsRemoved is not 0:
         logger.error("Error deleting Cron jobs, health probe will not fail")
 
-"""
-Call the VMSS Rest API to Delete the VM 
-"""
-def deleteVMFromVMSS():
-    logger.info("Deleting the VM from VMSS")
-
-    vm_delete_url =  config.get('vmss', 'vm_delete_url')
-    formatted_url = vm_delete_url.format(subscriptionId = vmInstance.subscriptionId, \
-         resourceGroupName = vmInstance.resourceGroupName,\
-              vmScaleSetName = vmInstance.vmScaleSetName, instanceId = vmInstance.vmId)
-
-    logger.info("The Delete URL is - " +  formatted_url)
-
-    requests.delete(formatted_url, data={}, auth=BearerAuth(vmInstance.access_token))
-
-#if(isInstanceinPendingDelete()):
 if(vmInstance.isPendingDelete()):
     logger.info("Pending Delete is true ...starting custom clean up logic")
-    # No need to kill health probe. Probe will remove instance from AGW by returning 410.
-    # failLoadBalancerProbes()
     stopCustomMetricFlow()
     performCustomOperation()
-    deleteVMFromVMSS()
 else: 
     logger.info("Instance not in Pending Delete, nothing to do")
