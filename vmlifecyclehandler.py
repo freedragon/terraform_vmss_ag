@@ -2,10 +2,12 @@
 
 from logconfig import logger
 from configuration import config
-from vminstance import VMInstance
+# from vminstance import VMInstance
+from InstanceMetadata import InstanceMetadata
+from bearer_token import BearerAuth
 import requests, json, os
 
-vmInstance = VMInstance().populate()
+vmInstance = InstanceMetadata().populate()
 logger.info(vmInstance)
 
 """
@@ -75,9 +77,11 @@ def deleteVMFromVMSS():
 
     requests.delete(formatted_url, data={}, auth=BearerAuth(vmInstance.access_token))
 
-if(isInstanceinPendingDelete()):
+#if(isInstanceinPendingDelete()):
+if(vmInsance.isPendingDelete()):
     logger.info("Pending Delete is true ...starting custom clean up logic")
-    failLoadBalancerProbes()
+    # No need to kill health probe. Probe will remove instance from AGW by returning 410.
+    # failLoadBalancerProbes()
     stopCustomMetricFlow()
     performCustomOperation()
     deleteVMFromVMSS()
