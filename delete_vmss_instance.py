@@ -2,10 +2,13 @@
 from logconfig import logger
 from configuration import config
 from InstanceMetadata import InstanceMetadata
-import requests, json, os, time, sys, socket
-
+from azure.mgmt.resource import ResourceManagementClient
+from azure.mgmt.compute import ComputeManagementClient
+from azure.mgmt.network import NetworkManagementClient
+from msrestazure.azure_active_directory import MSIAuthentication
 from bearer_token import BearerAuth
-from self_delete import delete_vmss_instance, hostname_to_vmid
+
+import requests, json, os, time, sys, socket
 
 # Initializing InstanceMetadata
 metadata = InstanceMetadata().populate()
@@ -14,6 +17,37 @@ isPendingDelete = metadata.isPendingDelete()
 host_name = socket.gethostname()
 host_ip = socket.gethostbyname(host_name)
 timeSleep = 10
+
+def delete_vmss_instance():
+    ##MSI based authentication
+    credentials       = MSIAuthentication()
+    metadata        = InstanceMetadata().populate()
+    
+    subscription_id   = metadata.subscriptionId
+    #resource_client   = ResourceManagementClient(credentials, subscription_id)
+    compute_client    = ComputeManagementClient(credentials, subscription_id)
+    #network_client    = NetworkManagementClient(credentials, subscription_id)
+
+    resourceGroupName = metadata.resourceGroupName
+    vmScaleSetName    = metadata.vmScaleSetName
+    host_name         = socket.gethostname()
+    vmid              = hostname_to_vmid(host_name)
+    compute_client.virtual_machine_scale_set_vms.delete(resourceGroupName, vmScaleSetName, vmid)
+
+def hostname_to_vmid(hostname):
+    # get last 6 characters and remove leading zeroes
+    hexatrig = hostname[-6:].lstrip('0')
+    multiplier = 1
+    vmid = 0
+    # reverse string and process each char
+    for x in hexatrig[::-1]:
+        if x.isdigit():
+            vmid += int(x) * multiplier
+        else:
+            # convert letter to corresponding integer
+            vmid += (ord(x) - 55) * multiplier
+        multiplier *= 36
+    return vmid
 
 # Check the value of Platform.PendingDeletionTime tag of IMDS
 if (isPendingDelete == False):
