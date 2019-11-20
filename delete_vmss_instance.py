@@ -5,7 +5,7 @@ from InstanceMetadata import InstanceMetadata
 import requests, json, os, time, sys, socket
 
 from bearer_token import BearerAuth
-from self_delete import self_delete
+from self_delete import delete_vmss_instance, hostname_to_vmid
 
 # Initializing InstanceMetadata
 metadata = InstanceMetadata().populate()
