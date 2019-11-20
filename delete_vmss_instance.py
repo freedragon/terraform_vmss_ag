@@ -54,7 +54,7 @@ if (resp.status_code == 200):
                 if (host_ip == server["address"]):
                     health = server["health"]
                     logger.info(host_name + " is " + health)
-                    if (health == "Unhealty"):
+                    if (health == "Unhealthy"):
                         logger.info("Delete " + host_name)
                         #check copying log and stopping custom metric
                         #delete vmss instance
