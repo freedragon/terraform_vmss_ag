@@ -9,7 +9,7 @@ config.read('config.ini')
 imds_url = config.get('imds', 'imds_url')
 response = requests.get(imds_url, headers={"Metadata":"true"})
 response_txt = json.loads(response.text)
-print('Original Response : {}'.format(response_txt))
+#print('Original Response : {}'.format(response_txt))
 #populate required instance variables
 vmId = response_txt['vmId']
 name = response_txt['name']
@@ -19,6 +19,7 @@ vmScaleSetName = response_txt['vmScaleSetName']
 resourceGroupName = response_txt['resourceGroupName']
 #print('ResourceGroupName: {}'.format(resourceGroupName))
 tags = response_txt['tags']
+###############################################################
 global pendingDeleteState
 pendingDeleteState = False
 print('tags: {}'.format(tags))
@@ -26,7 +27,8 @@ for tag in response_txt['tagsList']:
     for k, v in tag.items():
         if( k == 'name' and v == 'Platform.PendingDeletionTime'):
             pendingDeleteState = True
-print('pendingDelteState is {}'.format(pendingDeleteState))
+print('PendingDelteState is {}'.format(pendingDeleteState))
+###############################################################
 #    if(result['name'] == 'Platform.PendingDeleteTime'):
 #        print('PendingDeleteTime is detected')
 #populate access_token
