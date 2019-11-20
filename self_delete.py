@@ -34,4 +34,4 @@ def hostname_to_vmid(hostname):
             # convert letter to corresponding integer
             vmid += (ord(x) - 55) * multiplier
         multiplier *= 36
-    return hostname_to_vmid
+    return vmid
