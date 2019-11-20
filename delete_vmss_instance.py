@@ -10,11 +10,6 @@ from bearer_token import BearerAuth
 metadata = InstanceMetadata().populate()
 isPendingDelete = metadata.isPendingDelete()
 
-
-# Initializing InstanceMetadata
-metadata = InstanceMetadata().populate()
-isPendingDelete = metadata.isPendingDelete()
-
 host_name = socket.gethostname()
 host_ip = socket.gethostbyname(host_name)
 timeSleep = 10
