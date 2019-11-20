@@ -10,20 +10,22 @@ class InstanceMetadata:
                 VM Instance Metadata:
                      Id - {vmId}
                      Name - {name}
+                     PrivateIp - {privateIp}
                      location - {location}
                      SubscriptionId - {subscriptionId}
                      ResourceGroupName - {resourceGroupName}
                      VMScaleSetName - {vmScaleSetName}
-                     Tags - {tags}
+                     TagsList - {tagsList}
                      Access-Token - {access_token}
                 """.format(
                     vmId = self.vmId,
                     name = self.name,
                     location = self.location,
+                    privateIp = self.privateIp,
                     subscriptionId = self.subscriptionId,
                     resourceGroupName = self.resourceGroupName,
                     vmScaleSetName = self.vmScaleSetName,
-                    tags = self.tags,
+                    tagsList = self.tagsList,
                     access_token = self.access_token
                 )
 
@@ -46,7 +48,12 @@ class InstanceMetadata:
             self.subscriptionId = response_txt['subscriptionId']
             self.vmScaleSetName = response_txt['vmScaleSetName']
             self.resourceGroupName = response_txt['resourceGroupName']
-            self.tags = response_txt['tags']
+            self.tagsList = response_txt['tagsList']
+
+            # obtain private ip address of instnace
+            privateip_url = config.get('imds', 'privateip_url')
+            response = requests.get(privateip_url, headers={"Metadata":"true"})
+            self.privateIp = response.text
 
             #populate access_token
             self.access_token = ''
@@ -67,8 +74,14 @@ class InstanceMetadata:
     """
     def isPendingDelete(self):
         deleteTag = config.get('imds', 'pending_delete_tag')
-
-        if deleteTag in self.tags:
+        pendingDeleteState = False
+        
+        for tag in self.tagsList:
+            for k, v in tag.items():
+                if( k == 'name' and v == deleteTag):
+                    pendingDeleteState = True
+        
+        if pendingDeleteState:
             return True
         else:
             return False

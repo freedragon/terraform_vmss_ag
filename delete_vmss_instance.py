@@ -2,21 +2,26 @@
 from logconfig import logger
 from configuration import config
 from InstanceMetadata import InstanceMetadata
-import requests, json, os, time, sys
-from bearer_token import BearerAuth
+import requests, json, os, time, sys, socket
 
-import socket
+from bearer_token import BearerAuth
 
 # Initializing InstanceMetadata
 metadata = InstanceMetadata().populate()
 isPendingDelete = metadata.isPendingDelete()
 
-host_name = metadata.name
+
+# Initializing InstanceMetadata
+metadata = InstanceMetadata().populate()
+isPendingDelete = metadata.isPendingDelete()
+
+host_name = socket.gethostname()
 host_ip = socket.gethostbyname(host_name)
 timeSleep = 10
 
 # Check the value of Platform.PendingDeletionTime tag of IMDS
 if (isPendingDelete == False):
+    logger.info('exit : ' + str(isPendingDelete))
     sys.exit(1)
 
 # Get App GW Backend status check URL and App GW name
@@ -31,7 +36,7 @@ formatted_url = appGatewayUrl.format(subscriptionId = metadata.subscriptionId, \
 try:
     r = requests.post(formatted_url, headers = {}, auth=BearerAuth(metadata.access_token))
 except requests.exceptions.RequestException as e:
-    logger.info("error : " + e)
+    logger.info("error : " + str(e))
     sys.exit(1)
 
 # Waiting for another api to check the result.
@@ -39,7 +44,7 @@ time.sleep(timeSleep)
 try:
     resp = requests.get(r.headers["Location"], auth=BearerAuth(metadata.access_token))
 except requests.exceptions.RequestException as e:
-    logger.info("error : " + e)
+    logger.info("error : " + str(e))
     sys.exit(1)
 
 # Delete VMSS instance
