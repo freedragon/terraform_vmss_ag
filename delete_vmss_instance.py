@@ -3,7 +3,13 @@ from logconfig import logger
 from configuration import config
 from InstanceMetadata import InstanceMetadata
 import requests, json, os, time, sys, socket
+
 from bearer_token import BearerAuth
+
+# Initializing InstanceMetadata
+metadata = InstanceMetadata().populate()
+isPendingDelete = metadata.isPendingDelete()
+
 
 # Initializing InstanceMetadata
 metadata = InstanceMetadata().populate()
