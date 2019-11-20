@@ -4,13 +4,13 @@ import logging
 
 # Create a custom logger
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.WARNING)
 
 # Create handlers
 c_handler = logging.StreamHandler()
-f_handler = logging.FileHandler('azvmscripts.log')
-c_handler.setLevel(logging.INFO)
-f_handler.setLevel(logging.INFO)
+f_handler = logging.FileHandler('vmss_lifcycle_hook.log')
+c_handler.setLevel(logging.WARNING)
+f_handler.setLevel(logging.WARNING)
 
 # Create formatters and add it to handlers
 c_format = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
