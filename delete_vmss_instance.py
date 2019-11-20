@@ -5,6 +5,7 @@ from InstanceMetadata import InstanceMetadata
 import requests, json, os, time, sys, socket
 
 from bearer_token import BearerAuth
+from self_delete import self_delete
 
 # Initializing InstanceMetadata
 metadata = InstanceMetadata().populate()
@@ -57,4 +58,5 @@ if (resp.status_code == 200):
                         logger.info("Delete " + host_name)
                         #check copying log and stopping custom metric
                         #delete vmss instance
+                        self_delete.delete_vmss_instance()
 
