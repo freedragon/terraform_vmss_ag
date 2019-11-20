@@ -30,7 +30,7 @@ def delete_vmss_instance():
 
     resourceGroupName = metadata.resourceGroupName
     vmScaleSetName    = metadata.vmScaleSetName
-    host_name         = socket.gethostname()
+    #host_name         = socket.gethostname()
     vmid              = hostname_to_vmid(host_name)
     compute_client.virtual_machine_scale_set_vms.delete(resourceGroupName, vmScaleSetName, vmid)
 
