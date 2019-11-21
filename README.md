@@ -1,4 +1,4 @@
-### Azure VMSS Lifecycle Hook
+# Azure VMSS Lifecycle Hook
 ## VMSS Setting.
 AZ:no, PublicLB:yes, MSI:yes, MSI RBAC:yes, Custom Extension:yes, PPG:yes, Application Gateway:yes
 
