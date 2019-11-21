@@ -46,7 +46,7 @@ resource "azurerm_subnet" "agsubnet" {
 }
 
 resource "azurerm_public_ip" "PublicLBPIP" {
-  name                = "publicip"
+  name                = "publiclb-pip"
   location            = "${azurerm_resource_group.terraformrg.location}"
   resource_group_name = "${azurerm_resource_group.terraformrg.name}"
   allocation_method   = "Dynamic"
@@ -69,7 +69,7 @@ resource "azurerm_public_ip" "agPIP" {
 
 
 resource "azurerm_lb" "terraformnatlb" {
-  name                = "terraformnatlb"
+  name                = "terraform-natlb"
   location            = "${azurerm_resource_group.terraformrg.location}"
   resource_group_name = "${azurerm_resource_group.terraformrg.name}"
 
