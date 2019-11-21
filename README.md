@@ -24,6 +24,7 @@ Overall evnironment will be deployed from terraform with following characteristi
  - PublicLB: deployed with a NAT rule for ssh. 
  - MSI: Enabled and configured as contributor on resource group. 
  - Custom Extension: read bootstrap file.
+ - VMSS scale-in policy: NewestVM, configured from the portal. 
  - Application Gateway: Backend pool and custom probe configured for this VMSS.
  - Applictions: Written in python, leverages Azure REST API and Azure SDK for python.
  
