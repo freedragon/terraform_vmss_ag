@@ -8,7 +8,7 @@ Prerequisite
 - EnablePendingDeletion=true tag configured on the VMSS.
 
 ## Overall Procedure
-
+![Architecture Image](https://github.com/bedro96/terraform_vmss_ag/blob/master/vmss_lifecycle_img/procedure.png)
 
 
 
