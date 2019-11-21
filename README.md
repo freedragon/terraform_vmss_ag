@@ -4,12 +4,18 @@ This feature enables users to conduct a graceful shutdown on VMSS instance, when
 ## Overall Architecture
 ![Architecture Image](https://github.com/bedro96/terraform_vmss_ag/blob/master/vmss_lifecycle_img/overall_architecture.png)
 Prerequisite  
-- The subscription must opt in for this feature
-- EnablePendingDeletion=true tag set aginst VMSS
+- The subscription must opt in for this feature.
+- EnablePendingDeletion=true tag configured on the VMSS.
+
+## Overall Prodedure
 
 
 
-## Overall .
+
+## Core components
+
+# Deployment
+## Deployment environment
 AZ:no, PublicLB:yes, MSI:yes, MSI RBAC:yes, Custom Extension:yes, PPG:yes, Application Gateway:yes
 
 ## Terraform 
