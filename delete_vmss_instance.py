@@ -89,8 +89,9 @@ if (resp.status_code == 200):
                     health = server["health"]
                     logger.info(host_name + " is " + health)
                     if (health == "Unhealthy"):
-                        logger.info("Delete " + host_name)
                         #check copying log and stopping custom metric
+                        logger.info("Check copying logs and stopping custom metric.")
                         #delete vmss instance
+                        logger.info("Delete " + host_name)
                         delete_vmss_instance()
 
