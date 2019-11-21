@@ -10,9 +10,12 @@ Prerequisite
 ## Overall Procedure
 ![Architecture Image](https://github.com/bedro96/terraform_vmss_ag/blob/master/vmss_lifecycle_img/procedure.png)
 
-
-
 ## Core components
+**Web Service - health_probe_handler**
+![Architecture Image](https://github.com/bedro96/terraform_vmss_ag/blob/master/vmss_lifecycle_img/health_probe_handler.png )
+
+**Delete VMSS Instance - delete_vmss_instance**
+![Architecture Image](https://github.com/bedro96/terraform_vmss_ag/blob/master/vmss_lifecycle_img/delete_vmss_instance.png)
 
 # Deployment
 ## Environment
