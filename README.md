@@ -1,7 +1,8 @@
 # Azure VMSS Lifecycle Hook
 This feature enables users to conduct a graceful shutdown on VMSS instance, when it is targeted for deletion. This provides huge flexibility for exceptional case handling on customer code.
 
-## Overall 
+## Overall Architecture
+![Architecture Image](https://github.com/bedro96/terraform_vmss_ag/blob/master/vmss_lifecycle_img/overall_architecture.png)
 
 
 
