@@ -1,4 +1,6 @@
 # Azure VMSS Lifecycle Hook
+This feature enables users to conduct a graceful shutdown on VMSS instance, when it is targeted for deletion. This provides huge flexibility for exceptional case handling on customer code.
+
 ## VMSS Setting.
 AZ:no, PublicLB:yes, MSI:yes, MSI RBAC:yes, Custom Extension:yes, PPG:yes, Application Gateway:yes
 
