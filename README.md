@@ -23,8 +23,9 @@ Overall evnironment will be deployed from terraform with following characteristi
  - Availability Zone: not considered.
  - PublicLB: deployed with a NAT rule for ssh. 
  - MSI: Enabled and configured as contributor on resource group. 
- - Custom Extension : read bootstrap file.
- - Application Gateway : Backend pool and custom probe configured for this VMSS.
+ - Custom Extension: read bootstrap file.
+ - Application Gateway: Backend pool and custom probe configured for this VMSS.
+ - Applictions: Written in python, leverages Azure REST API and Azure SDK for python.
  
 ## Terraform 
 Clone this git and modify terraform.tfvars as required. Execute following commands to deploy the environment.
