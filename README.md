@@ -19,23 +19,18 @@ Prerequisite
 
 # Deployment
 ## Environment
-Overall evnironment will be deployed with terraform with following characteristics.  
- - Availability Zone: not considered
- - PublicLB: deployed with a NAT rule for ssh 
- - MSI: Enabled and configured to have yes, MSI RBAC:yes, Custom Extension:yes, PPG:yes, Application Gateway:yes
-
+Overall evnironment will be deployed from terraform with following characteristics.  
+ - Availability Zone: not considered.
+ - PublicLB: deployed with a NAT rule for ssh. 
+ - MSI: Enabled and configured as contributor on resource group. 
+ - Custom Extension : read bootstrap file.
+ - Application Gateway : Backend pool and custom probe configured for this VMSS.
+ 
 ## Terraform 
-Get vmss_ag.tf and variable.tf. Place these files under identical foler. 
+Clone this git and modify terraform.tfvars as required. Execute following commands to deploy the environment.
 
 ```bash
 terraform init
 terraform plan -out=vmss_ag.out
 terraform apply vmss_ag.out
 ```
-
-## Location of downloaded extension files 
-```bash
-/var/lib/waagent/custom-script/download/1
-```
-The script is executed with root privilege.
-
