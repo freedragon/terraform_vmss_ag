@@ -7,7 +7,7 @@ Prerequisite
 - The subscription must opt in for this feature.
 - EnablePendingDeletion=true tag configured on the VMSS.
 
-## Overall Prodedure
+## Overall Procedure
 
 
 
@@ -15,8 +15,11 @@ Prerequisite
 ## Core components
 
 # Deployment
-## Deployment environment
-AZ:no, PublicLB:yes, MSI:yes, MSI RBAC:yes, Custom Extension:yes, PPG:yes, Application Gateway:yes
+## Environment
+Overall evnironment will be deployed with terraform with following characteristics.  
+ - Availability Zone: not considered
+ - PublicLB: deployed with a NAT rule for ssh 
+ - MSI: Enabled and configured to have yes, MSI RBAC:yes, Custom Extension:yes, PPG:yes, Application Gateway:yes
 
 ## Terraform 
 Get vmss_ag.tf and variable.tf. Place these files under identical foler. 
